@@ -20,6 +20,13 @@ const Footer = () => {
           <p className="footer-desc">
             Pioneering the future of intelligent business automation. We simplify complexity so you can focus on growth.
           </p>
+          <div style={{ marginTop: '20px', color: 'var(--text-secondary)' }}>
+            <strong style={{ color: 'var(--text-primary)' }}>Need more info? Call us:</strong>
+            <br />
+            <a href="tel:+94754461633" style={{ color: 'var(--accent-primary)', textDecoration: 'none', fontSize: '1.1rem', display: 'inline-block', marginTop: '5px' }}>
+              +94 754 461 633
+            </a>
+          </div>
         </div>
         
         <div className="footer-links">
