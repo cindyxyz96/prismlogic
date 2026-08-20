@@ -37,6 +37,13 @@
   cursor: pointer;
 }
 
+.logo-img {
+  height: 64px;
+  border-radius: 12px;
+  margin-right: 12px;
+  object-fit: contain;
+}
+
 .logo-icon {
   color: var(--accent-secondary);
   font-size: 1.5rem;
@@ -80,8 +87,33 @@
   width: 100%;
 }
 
+.nav-actions .btn {
+  white-space: nowrap; /* Prevent button text from wrapping */
+}
+
 @media (max-width: 768px) {
   .nav-links {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 0 10px;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .logo-img {
+    height: 40px;
+    margin-right: 8px;
+    border-radius: 8px;
+  }
+
+  .nav-actions .btn {
+    padding: 8px 15px;
+    font-size: 0.85rem;
   }
 }

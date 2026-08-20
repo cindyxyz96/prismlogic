@@ -1,0 +1,102 @@
+.dashboard-section {
+  padding: 100px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.chart-card {
+  padding: 40px;
+  border-radius: 24px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.chart-header h3 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.legend {
+  display: flex;
+  gap: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.manual-dot {
+  background: #ff5f56;
+  box-shadow: 0 0 10px rgba(255, 95, 86, 0.5);
+}
+
+.auto-dot {
+  background: #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 400px;
+}
+
+.custom-tooltip {
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(10, 10, 15, 0.9);
+}
+
+.custom-tooltip .label {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.custom-tooltip .desc {
+  font-size: 0.9rem;
+  margin: 0 0 5px 0;
+}
+
+.custom-tooltip .desc.manual {
+  color: #ff5f56;
+}
+
+.custom-tooltip .desc.automated {
+  color: #00ffff;
+}
+
+@media (max-width: 768px) {
+  .chart-wrapper {
+    height: 300px;
+  }
+  .chart-card {
+    padding: 20px;
+  }
+}

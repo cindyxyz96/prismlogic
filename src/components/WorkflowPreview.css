@@ -1,0 +1,209 @@
+.workflow-section {
+  padding: 100px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.workflow-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.workflow-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.workflow-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  background: rgba(138, 43, 226, 0.2);
+  border-color: var(--accent-primary);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.workflow-canvas {
+  padding: 40px;
+  border-radius: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  min-height: 250px;
+}
+
+.workflow-controls {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-run {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-secondary);
+  color: #000;
+  box-shadow: 0 0 15px var(--secondary-glow);
+}
+
+.btn-run:hover:not(:disabled) {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+.btn-run:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nodes-container {
+  width: 100%;
+  overflow-x: auto; /* Allow scrolling if it overflows on small screens */
+  padding-bottom: 20px;
+}
+
+.workflow-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 15px;
+  flex-wrap: wrap; /* Wrap to multiple lines automatically */
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  flex: 1 1 220px; /* Allow growing, but have a solid base width */
+  max-width: 300px;
+  min-width: 220px; /* Ensure it never gets too small */
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.node-icon {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.node-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.node-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.node-app {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.connection-line {
+  height: 4px;
+  flex-grow: 1;
+  min-width: 30px;
+  max-width: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animations for running state */
+.connection-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent-secondary), transparent);
+}
+
+/* Define sequence delays */
+.connection-line.active-delay-0::after { animation: flowLine 0.7s linear forwards; }
+.connection-line.active-delay-1::after { animation: flowLine 0.7s linear forwards 0.7s; }
+.connection-line.active-delay-2::after { animation: flowLine 0.7s linear forwards 1.4s; }
+.connection-line.active-delay-3::after { animation: flowLine 0.7s linear forwards 2.1s; }
+.connection-line.active-delay-4::after { animation: flowLine 0.7s linear forwards 2.8s; }
+.connection-line.active-delay-5::after { animation: flowLine 0.7s linear forwards 3.5s; }
+.connection-line.active-delay-6::after { animation: flowLine 0.7s linear forwards 4.2s; }
+
+.node.active-delay-0 { animation: activateNode 0.5s forwards; }
+.node.active-delay-1 { animation: activateNode 0.5s forwards 0.7s; }
+.node.active-delay-2 { animation: activateNode 0.5s forwards 1.4s; }
+.node.active-delay-3 { animation: activateNode 0.5s forwards 2.1s; }
+.node.active-delay-4 { animation: activateNode 0.5s forwards 2.8s; }
+.node.active-delay-5 { animation: activateNode 0.5s forwards 3.5s; }
+.node.active-delay-6 { animation: activateNode 0.5s forwards 4.2s; }
+
+@keyframes flowLine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes activateNode {
+  0% {
+    border-color: var(--border-color);
+    box-shadow: none;
+  }
+  50% {
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 15px var(--secondary-glow);
+  }
+  100% {
+    border-color: var(--border-color);
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .workflow-track {
+    width: 100%;
+  }
+}

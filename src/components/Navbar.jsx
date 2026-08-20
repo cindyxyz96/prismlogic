@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled glass' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
-          <img src="/logo.jpg" alt="PrismLogic Logo" style={{ height: '64px', borderRadius: '12px', marginRight: '12px', objectFit: 'contain' }} />
+          <img src="/logo.jpg" alt="PrismLogic Logo" className="logo-img" />
           Prism<span className="logo-highlight">Logic</span>
         </div>
         <ul className="nav-links">
