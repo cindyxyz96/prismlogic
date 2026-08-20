@@ -1,5 +1,5 @@
 import React from 'react';
-import { Workflow, Globe, Monitor, Bot, FileSpreadsheet } from 'lucide-react';
+import { Workflow, Globe, Monitor, Bot, FileSpreadsheet, Sparkles, Layout } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './Services.css';
 
@@ -34,6 +34,18 @@ const Services = () => {
       title: 'Excel Automations',
       description: 'Supercharge your spreadsheets with macros, scripts, and data processing workflows for any industry.',
       icon: <FileSpreadsheet size={48} color="#00ffff" strokeWidth={1.5} />,
+    },
+    {
+      id: 6,
+      title: 'Digital Invitations',
+      description: <span>Stunning, custom-designed digital event invitations built exactly to your vision. <a href="https://invitation-chathuka-dilhani.vercel.app/" target="_blank" rel="noreferrer" style={{color: 'var(--accent-secondary)'}}>View a live sample here.</a></span>,
+      icon: <Sparkles size={48} color="#8a2be2" strokeWidth={1.5} />,
+    },
+    {
+      id: 7,
+      title: 'Web Applications',
+      description: 'Developing fully bespoke, high-performance web applications and responsive sites tailored to your business.',
+      icon: <Layout size={48} color="#00ffff" strokeWidth={1.5} />,
     }
   ];
 

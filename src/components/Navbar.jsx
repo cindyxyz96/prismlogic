@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ onOpenContact }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Navbar = () => {
           <li><a href="#contact">Contact</a></li>
         </ul>
         <div className="nav-actions">
-          <a href="#get-started" className="btn btn-primary">Get Started</a>
+          <button className="btn btn-primary" onClick={onOpenContact}>Get Started</button>
         </div>
       </div>
     </nav>

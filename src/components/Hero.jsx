@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './Hero.css';
 
-const Hero = () => {
+const Hero = ({ onOpenContact }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -41,8 +41,8 @@ const Hero = () => {
           PrismLogic transforms complex workflows into seamless, automated systems. Elevate your business with data-driven insights and AI-powered integration.
         </motion.p>
         <motion.div variants={itemVariants} className="hero-actions">
-          <button className="btn btn-primary">Start Automating</button>
-          <button className="btn btn-outline">Explore Solutions</button>
+          <button className="btn btn-primary" onClick={onOpenContact}>Start Automating</button>
+          <a href="#services" className="btn btn-outline" style={{ display: 'inline-block', textDecoration: 'none' }}>Explore Solutions</a>
         </motion.div>
       </motion.div>
       

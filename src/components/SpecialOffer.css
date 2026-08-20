@@ -1,0 +1,223 @@
+.offer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+}
+
+.special-offer-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001;
+  pointer-events: none; /* Let clicks pass through to backdrop */
+}
+
+.offer-container {
+  pointer-events: auto; /* Re-enable clicks for the modal itself */
+  width: 90%;
+  max-width: 1100px;
+  background: linear-gradient(135deg, rgba(20, 15, 40, 0.95), rgba(0, 0, 0, 0.8));
+  border-radius: 24px;
+  padding: 50px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  border: 1px solid rgba(138, 43, 226, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(138, 43, 226, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.offer-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 5px;
+  z-index: 10;
+}
+
+.offer-close:hover {
+  color: var(--text-primary);
+}
+
+.offer-content {
+  flex: 1;
+  max-width: 550px;
+  z-index: 2;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(138, 43, 226, 0.2);
+  color: var(--accent-primary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.offer-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.offer-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.offer-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.benefit-icon {
+  color: var(--accent-secondary);
+}
+
+.offer-btn {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.offer-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 300px;
+  z-index: 2;
+}
+
+.glow-sphere {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.4) 0%, rgba(0, 255, 255, 0.1) 60%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(20px);
+  animation: pulse 4s infinite alternate ease-in-out;
+}
+
+.floating-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card-1 {
+  top: 20%;
+  left: 10%;
+  animation: float 5s infinite ease-in-out;
+}
+
+.card-2 {
+  bottom: 20%;
+  right: 10%;
+  animation: float 6s infinite ease-in-out reverse;
+}
+
+.card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.card-dot.success {
+  background: var(--accent-secondary);
+  box-shadow: 0 0 10px var(--accent-secondary);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+@media (max-width: 992px) {
+  .offer-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 30px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .offer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .offer-benefits {
+    align-items: flex-start;
+    text-align: left;
+  }
+  
+  .offer-visual {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .offer-title {
+    font-size: 2rem;
+  }
+  .floating-card {
+    font-size: 0.8rem;
+    padding: 10px 15px;
+  }
+}
