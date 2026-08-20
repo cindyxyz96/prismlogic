@@ -1,0 +1,175 @@
+.tool-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* AI Workflow Generator */
+.generator-form .input-group {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.generator-form input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px 20px;
+  color: white;
+  font-size: 1rem;
+}
+
+.generator-form input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.prompt-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.prompt-suggestions button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--accent-secondary);
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.prompt-suggestions button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.generating-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  text-align: center;
+}
+
+.spinner-icon {
+  color: var(--accent-primary);
+  animation: spin 2s linear infinite;
+  margin-bottom: 20px;
+}
+
+.scan-lines {
+  width: 100%;
+  max-width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.scan-line-active {
+  width: 40%;
+  height: 100%;
+  background: var(--accent-secondary);
+  animation: scan 1.5s ease-in-out infinite alternate;
+}
+
+.result-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.workflow-diagram-mock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  width: 100%;
+}
+
+.workflow-diagram-mock .node {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(0, 255, 255, 0.1));
+  border: 1px solid rgba(138, 43, 226, 0.4);
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.workflow-diagram-mock .node-arrow {
+  color: var(--text-secondary);
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes scan {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(150%); }
+}
+
+/* Scraper & OCR Common */
+.split-view {
+  display: flex;
+  gap: 20px;
+  height: 300px;
+}
+
+.split-left, .split-right {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panel-body {
+  padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .generator-form .input-group {
+    flex-direction: column;
+  }
+  .split-view {
+    flex-direction: column;
+    height: auto;
+  }
+  .split-left, .split-right {
+    min-height: 250px;
+  }
+  .workflow-diagram-mock {
+    flex-direction: column;
+  }
+  .node-arrow {
+    transform: rotate(90deg);
+  }
+}

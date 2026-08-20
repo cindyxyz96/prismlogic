@@ -7,7 +7,7 @@ import WorkflowPreview from './components/WorkflowPreview';
 import DataDashboard from './components/DataDashboard';
 import SpecialOffer from './components/SpecialOffer';
 import Testimonials from './components/Testimonials';
-import ROICalculator from './components/ROICalculator';
+import ToolsShowcase from './components/ToolsShowcase';
 import Footer from './components/Footer';
 import AnimatedBackground from './components/AnimatedBackground';
 import ContactModal from './components/ContactModal';
@@ -32,10 +32,10 @@ function App() {
         <Hero onOpenContact={() => setIsContactModalOpen(true)} />
         <ImpactCounters />
         <Services />
+        <ToolsShowcase onOpenContact={() => setIsContactModalOpen(true)} />
         <WorkflowPreview />
         <DataDashboard />
         <Testimonials />
-        <ROICalculator />
       </main>
       <Footer />
       
