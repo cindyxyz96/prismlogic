@@ -1,0 +1,84 @@
+.services {
+  padding: 100px 20px;
+  background: relative;
+  z-index: 1;
+}
+
+.services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.service-card {
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-speed) var(--transition-bounce), box-shadow var(--transition-speed) ease;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.service-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  background: var(--surface-color-hover);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.service-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.service-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.service-hover-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(138, 43, 226, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+  z-index: -1;
+}
+
+.service-card:hover .service-hover-effect {
+  opacity: 1;
+}
