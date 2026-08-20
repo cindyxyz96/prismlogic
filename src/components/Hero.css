@@ -133,6 +133,26 @@
   background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
 }
 
+.hero-logo-reflection {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  opacity: 0.04; /* Very faint */
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  animation: rotateSlowly 120s linear infinite;
+  mix-blend-mode: screen; /* Helps it blend nicely with the dark background */
+}
+
+@keyframes rotateSlowly {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 @keyframes float {
   0% { transform: translate(0, 0); }
   100% { transform: translate(50px, 50px); }
@@ -144,5 +164,9 @@
   }
   .hero-actions {
     flex-direction: column;
+  }
+  .hero-logo-reflection {
+    width: 400px;
+    height: 400px;
   }
 }

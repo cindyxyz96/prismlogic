@@ -25,6 +25,7 @@ const Hero = ({ onOpenContact }) => {
       <div className="hero-background">
         <div className="glow glow-1"></div>
         <div className="glow glow-2"></div>
+        <img src="/logo.jpg" alt="" className="hero-logo-reflection" />
       </div>
       
       <motion.div 
