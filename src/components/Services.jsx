@@ -1,5 +1,5 @@
 import React from 'react';
-import { Workflow, Globe, Monitor, Bot, FileSpreadsheet, Sparkles, Layout } from 'lucide-react';
+import { Workflow, Globe, Monitor, Bot, FileSpreadsheet, Sparkles, Layout, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './Services.css';
 
@@ -46,6 +46,12 @@ const Services = () => {
       title: 'Web Applications',
       description: 'Developing fully bespoke, high-performance web applications and responsive sites tailored to your business.',
       icon: <Layout size={48} color="#00ffff" strokeWidth={1.5} />,
+    },
+    {
+      id: 8,
+      title: 'Cybersecurity Audits',
+      description: 'Protect your enterprise with proactive Dark Web monitoring, OSINT vulnerability scans, and automated threat responses.',
+      icon: <ShieldCheck size={48} color="#8a2be2" strokeWidth={1.5} />,
     }
   ];
 
