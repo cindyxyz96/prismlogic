@@ -140,12 +140,29 @@
   transform: translate(-50%, -50%);
   width: 800px;
   height: 800px;
-  opacity: 0.04; /* Very faint */
+  opacity: 0.04;
   object-fit: contain;
   pointer-events: none;
   z-index: 0;
   animation: rotateSlowly 120s linear infinite;
-  mix-blend-mode: screen; /* Helps it blend nicely with the dark background */
+  mix-blend-mode: screen;
+}
+
+.hero-background-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14vw; /* Scales massively across screen widths */
+  font-weight: 900;
+  white-space: nowrap;
+  color: var(--text-primary);
+  opacity: 0.05; /* Fallback if framer-motion doesn't override */
+  pointer-events: none;
+  z-index: 0;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  mix-blend-mode: overlay;
 }
 
 @keyframes rotateSlowly {

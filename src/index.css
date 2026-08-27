@@ -1,19 +1,20 @@
 :root {
-  /* Color Palette - Dark Mode with Neon Accents */
-  --bg-color: #0a0a0f;
-  --bg-gradient: linear-gradient(135deg, #0a0a0f 0%, #13111c 100%);
-  --surface-color: rgba(255, 255, 255, 0.03);
-  --surface-color-hover: rgba(255, 255, 255, 0.08);
-  --border-color: rgba(255, 255, 255, 0.05);
+  /* Color Palette - GitHub Dark Mode Inspired (Premium) */
+  --bg-color: #0d1117;
+  --bg-gradient: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  --surface-color: rgba(22, 27, 34, 0.7); /* Translucent GitHub Panel */
+  --surface-color-hover: rgba(33, 38, 45, 0.8);
+  --border-color: #30363d;
   
-  --primary-glow: rgba(138, 43, 226, 0.5); /* Violet */
-  --secondary-glow: rgba(0, 255, 255, 0.5); /* Cyan */
+  /* Subtle, elegant glows (GitHub Blue and Purple) */
+  --primary-glow: rgba(88, 166, 255, 0.3); /* GitHub Blue */
+  --secondary-glow: rgba(137, 87, 229, 0.3); /* GitHub Purple */
   
-  --accent-primary: #8a2be2;
-  --accent-secondary: #00ffff;
+  --accent-primary: #58a6ff; /* GitHub Blue */
+  --accent-secondary: #8957e5; /* GitHub Purple */
   
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0b0;
+  --text-primary: #c9d1d9; /* Clean white-grey */
+  --text-secondary: #8b949e; /* Muted text */
 
   --font-family: 'Outfit', sans-serif;
   
@@ -63,26 +64,27 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  color: #fff;
-  box-shadow: 0 4px 15px var(--primary-glow);
+  background: linear-gradient(90deg, #ffffff, #d4d4d4);
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--secondary-glow);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
   filter: brightness(1.1);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--text-primary);
-  border: 1px solid var(--accent-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .btn-outline:hover {
-  background: rgba(0, 255, 255, 0.1);
-  box-shadow: 0 0 15px var(--secondary-glow);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
 }
 
 /* Typography */

@@ -1,8 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import SpiderWebBackground from './SpiderWebBackground';
 import './Hero.css';
 
 const Hero = ({ onOpenContact }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const bgSlides = [
+    "Cybersecurity",
+    "AI Workflows",
+    "Data Scraping",
+    "Voice Agents",
+    "Custom RPA"
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % bgSlides.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [bgSlides.length]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -25,7 +42,20 @@ const Hero = ({ onOpenContact }) => {
       <div className="hero-background">
         <div className="glow glow-1"></div>
         <div className="glow glow-2"></div>
-        <img src="/logo.jpg" alt="" className="hero-logo-reflection" />
+        <SpiderWebBackground />
+        
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 0.05, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="hero-background-text"
+          >
+            {bgSlides[currentSlide]}
+          </motion.div>
+        </AnimatePresence>
       </div>
       
       <motion.div 
