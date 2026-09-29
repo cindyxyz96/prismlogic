@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ImpactCounters from './components/ImpactCounters';
@@ -11,19 +12,9 @@ import ToolsShowcase from './components/ToolsShowcase';
 import Footer from './components/Footer';
 import AnimatedBackground from './components/AnimatedBackground';
 import ContactModal from './components/ContactModal';
+import ClanTripForm from './components/ClanTripForm';
 
-function App() {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isOfferOpen, setIsOfferOpen] = useState(false);
-
-  useEffect(() => {
-    // Show the special offer popup 2 seconds after the user lands on the site
-    const timer = setTimeout(() => {
-      setIsOfferOpen(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
+const Home = ({ setIsContactModalOpen, isOfferOpen, setIsOfferOpen }) => {
   return (
     <>
       <AnimatedBackground />
@@ -49,6 +40,34 @@ function App() {
       />
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </>
+  );
+};
+
+function App() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isOfferOpen, setIsOfferOpen] = useState(false);
+
+  useEffect(() => {
+    // Show the special offer popup 2 seconds after the user lands on the site
+    const timer = setTimeout(() => {
+      setIsOfferOpen(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={
+          <Home 
+            setIsContactModalOpen={setIsContactModalOpen}
+            isOfferOpen={isOfferOpen}
+            setIsOfferOpen={setIsOfferOpen}
+          />
+        } />
+        <Route path="/clan-trip" element={<ClanTripForm />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
