@@ -43,6 +43,9 @@ const ClanTripForm = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const GOOGLE_SCRIPT_WEBHOOK = "https://script.google.com/macros/s/AKfycbyqsE1-cfcm58E85ZjJA2649Dg2Y-yvTQUTTJBAQg3RjaNxKgIWw3CUIgerLF4NFt-M7Q/exec";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -89,15 +92,32 @@ const ClanTripForm = () => {
     window.scrollTo({ top: 120, behavior: 'smooth' });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateStep(5)) {
       alert("Please accept the terms and complete all declarations! ⚠️");
       return;
     }
-    console.log("Trip Visa Application Submitted:", formData);
-    setIsSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    setIsSubmitting(true);
+
+    try {
+      // Send data directly to Google Sheet via Apps Script Web App
+      await fetch(GOOGLE_SCRIPT_WEBHOOK, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+    } catch (err) {
+      console.error("Submission error:", err);
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   if (isSubmitted) {
@@ -652,8 +672,8 @@ const ClanTripForm = () => {
                 Proceed to Section 0{currentStep + 1} <ChevronRight style={{ width: 18, height: 18 }} />
               </button>
             ) : (
-              <button type="submit" className="nav-submit-btn">
-                <Sparkles style={{ width: 18, height: 18 }} /> 👉 APPLY FOR TRIP VISA 🛂😂
+              <button type="submit" className="nav-submit-btn" disabled={isSubmitting}>
+                <Sparkles style={{ width: 18, height: 18 }} /> {isSubmitting ? "LODGING VISA APPLICATION..." : "👉 APPLY FOR TRIP VISA 🛂😂"}
               </button>
             )}
           </div>
