@@ -42,8 +42,15 @@ const ClanTripForm = () => {
     declarationAccepted: false
   });
 
+  const [portalTab, setPortalTab] = useState('apply'); // 'apply' or 'status'
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [duplicateError, setDuplicateError] = useState(null);
 
   const GOOGLE_SCRIPT_WEBHOOK = "https://script.google.com/macros/s/AKfycbyqsE1-cfcm58E85ZjJA2649Dg2Y-yvTQUTTJBAQg3RjaNxKgIWw3CUIgerLF4NFt-M7Q/exec";
 
@@ -53,10 +60,47 @@ const ClanTripForm = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+    if (name === 'contactNumber') {
+      setDuplicateError(null);
+    }
   };
 
   const handleSelectOption = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Search Visa Status by phone number or nickname
+  const handleCheckStatus = async (e) => {
+    if (e) e.preventDefault();
+    if (!searchQuery.trim()) return;
+
+    setIsSearching(true);
+    setHasSearched(true);
+    setSearchResult(null);
+
+    try {
+      const res = await fetch(GOOGLE_SCRIPT_WEBHOOK);
+      const data = await res.json();
+      
+      if (data && data.applicants) {
+        const cleanQuery = searchQuery.trim().toLowerCase().replace(/[\s\-\+]/g, '');
+        const match = data.applicants.find(a => {
+          const aPhone = a.contactNumber.toLowerCase();
+          const aName = a.fullName.toLowerCase();
+          const aNick = a.tripNickname.toLowerCase();
+          return aPhone.includes(cleanQuery) || aNick.includes(cleanQuery) || aName.includes(cleanQuery);
+        });
+
+        setSearchResult(match || { notFound: true });
+      } else {
+        setSearchResult({ notFound: true });
+      }
+    } catch (err) {
+      console.error("Error checking visa status:", err);
+      setSearchResult({ error: true });
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const validateStep = (step) => {
@@ -78,11 +122,31 @@ const ClanTripForm = () => {
     return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!validateStep(currentStep)) {
       alert("Please answer all required fields before proceeding! 🛂⚠️");
       return;
     }
+
+    // If advancing from Step 1, verify no duplicate application exists for this contact number
+    if (currentStep === 1) {
+      const cleanPhone = formData.contactNumber.trim().replace(/[\s\-\+]/g, '');
+      try {
+        const res = await fetch(GOOGLE_SCRIPT_WEBHOOK);
+        const data = await res.json();
+        if (data && data.applicants) {
+          const existing = data.applicants.find(a => a.contactNumber === cleanPhone);
+          if (existing) {
+            setDuplicateError(existing);
+            alert(`⚠️ Visa application already exists for this phone number!\nApplicant: ${existing.fullName} (${existing.tripNickname})\nCurrent Status: ${existing.status || 'PENDING'}`);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Could not pre-verify duplicate, proceeding:", err);
+      }
+    }
+
     setCurrentStep(prev => Math.min(prev + 1, 5));
     window.scrollTo({ top: 120, behavior: 'smooth' });
   };
@@ -224,34 +288,160 @@ const ClanTripForm = () => {
           </div>
         </div>
 
-        {/* Progress Tracker */}
-        <div className="visa-progress-tracker">
-          {sections.map((sec) => {
-            const Icon = sec.icon;
-            const isCompleted = currentStep > sec.id;
-            const isActive = currentStep === sec.id;
-
-            return (
-              <div 
-                key={sec.id} 
-                className={`progress-step-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
-                onClick={() => {
-                  if (isCompleted || validateStep(currentStep)) {
-                    setCurrentStep(sec.id);
-                  }
-                }}
-              >
-                <div className="step-indicator-bubble">
-                  {isCompleted ? <CheckCircle style={{ width: 15, height: 15 }} /> : <Icon style={{ width: 14, height: 14 }} />}
-                </div>
-                <div className="step-label">{sec.title}</div>
-              </div>
-            );
-          })}
+        {/* Mode Switcher Tabs */}
+        <div className="portal-tabs-nav">
+          <button 
+            type="button" 
+            className={`portal-tab-btn ${portalTab === 'apply' ? 'active' : ''}`}
+            onClick={() => setPortalTab('apply')}
+          >
+            <FileText style={{ width: 18, height: 18 }} /> 📝 Apply for Visa
+          </button>
+          <button 
+            type="button" 
+            className={`portal-tab-btn ${portalTab === 'status' ? 'active' : ''}`}
+            onClick={() => setPortalTab('status')}
+          >
+            <ShieldCheck style={{ width: 18, height: 18 }} /> 🔍 Track Visa Status
+          </button>
         </div>
 
-        {/* Multi-Step Animated Form Panel */}
-        <form onSubmit={handleSubmit}>
+        {/* TAB 2: Visa Status Inquiry Portal */}
+        {portalTab === 'status' && (
+          <div className="status-search-panel">
+            <div className="visa-panel-header">
+              <div className="panel-header-icon"><ShieldCheck /></div>
+              <div>
+                <h3>Official Visa Status Verification</h3>
+                <div style={{ fontSize: '0.84rem', color: '#8b949e' }}>
+                  Search your application status using your Contact Number or Trip Callsign
+                </div>
+              </div>
+            </div>
+
+            <form onSubmit={handleCheckStatus} className="status-search-box">
+              <input 
+                type="text" 
+                className="visa-text-input" 
+                style={{ flex: 1 }}
+                placeholder="Enter Phone Number or Nickname (e.g. 0771234567 / Chutta)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                required
+              />
+              <button type="submit" className="status-search-btn" disabled={isSearching}>
+                {isSearching ? "Searching..." : "🔍 Check Status"}
+              </button>
+            </form>
+
+            {/* Live Search Result */}
+            {searchResult && !searchResult.notFound && !searchResult.error && (
+              <div className={`status-result-card ${
+                searchResult.status === 'APPROVED' ? 'status-approved' :
+                searchResult.status === 'REJECTED' ? 'status-rejected' : 'status-pending'
+              }`}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+                  <div>
+                    <h3 style={{ margin: '0 0 4px 0', fontSize: '1.3rem', color: '#fff' }}>
+                      {searchResult.fullName} <span style={{ color: '#58a6ff' }}>({searchResult.tripNickname})</span>
+                    </h3>
+                    <div style={{ fontSize: '0.82rem', color: '#8b949e' }}>
+                      Contact: {searchResult.rawContact}
+                    </div>
+                  </div>
+
+                  {/* Status Badge */}
+                  <div>
+                    {searchResult.status === 'APPROVED' && (
+                      <span className="status-badge-pill badge-approved">
+                        ✅ VISA APPROVED
+                      </span>
+                    )}
+                    {searchResult.status === 'REJECTED' && (
+                      <span className="status-badge-pill badge-rejected">
+                        ❌ VISA REJECTED
+                      </span>
+                    )}
+                    {searchResult.status !== 'APPROVED' && searchResult.status !== 'REJECTED' && (
+                      <span className="status-badge-pill badge-pending">
+                        ⏳ UNDER INVESTIGATION 😂
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Status Commentary */}
+                <div style={{ marginTop: '16px', fontSize: '0.92rem', lineHeight: 1.5 }}>
+                  {searchResult.status === 'APPROVED' && (
+                    <p style={{ color: '#7ee787', margin: 0 }}>
+                      🎉 <strong>Pack your bags!</strong> Your trip visa has been officially approved by the embassy high council. Get ready for ඇහින්දාස් Trip 6.0!
+                    </p>
+                  )}
+                  {searchResult.status === 'REJECTED' && (
+                    <p style={{ color: '#ff7b72', margin: 0 }}>
+                      😭 <strong>DEPORTATION ORDER ISSUED:</strong> Unfortunately, the trip committee found your application too responsible or broke. Your visa is denied! 😂
+                    </p>
+                  )}
+                  {searchResult.status !== 'APPROVED' && searchResult.status !== 'REJECTED' && (
+                    <p style={{ color: '#e3b341', margin: 0 }}>
+                      🕵️‍♂️ <strong>Application Pending:</strong> The committee is currently investigating your financial statements and party background. Stay tuned! 😂
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {searchResult && searchResult.notFound && (
+              <div style={{ marginTop: '24px', padding: '18px', textAlign: 'center', background: 'rgba(248, 81, 73, 0.1)', border: '1px dashed #f85149', borderRadius: '10px', color: '#ff7b72' }}>
+                ❌ <strong>No Visa Application Found:</strong> No record matches "{searchQuery}". Please ensure you submitted the form or check your phone number formatting!
+              </div>
+            )}
+
+            {searchResult && searchResult.error && (
+              <div style={{ marginTop: '24px', padding: '18px', textAlign: 'center', background: 'rgba(248, 81, 73, 0.1)', border: '1px solid #f85149', borderRadius: '10px', color: '#ff7b72' }}>
+                ⚠️ Unable to connect to embassy records right now. Please try again in a moment!
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 1: Visa Application Form */}
+        {portalTab === 'apply' && (
+          <>
+            {duplicateError && (
+              <div style={{ marginBottom: '20px', padding: '16px', background: 'rgba(210, 153, 34, 0.15)', border: '1px solid #d29922', borderRadius: '10px', color: '#e3b341' }}>
+                ⚠️ <strong>Duplicate Application Detected:</strong> A visa request already exists for this phone number ({duplicateError.fullName}). Current Status: <strong>{duplicateError.status || 'PENDING'}</strong>.
+              </div>
+            )}
+
+            {/* Progress Tracker */}
+            <div className="visa-progress-tracker">
+              {sections.map((sec) => {
+                const Icon = sec.icon;
+                const isCompleted = currentStep > sec.id;
+                const isActive = currentStep === sec.id;
+
+                return (
+                  <div 
+                    key={sec.id} 
+                    className={`progress-step-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                    onClick={() => {
+                      if (isCompleted || validateStep(currentStep)) {
+                        setCurrentStep(sec.id);
+                      }
+                    }}
+                  >
+                    <div className="step-indicator-bubble">
+                      {isCompleted ? <CheckCircle style={{ width: 15, height: 15 }} /> : <Icon style={{ width: 14, height: 14 }} />}
+                    </div>
+                    <div className="step-label">{sec.title}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Multi-Step Animated Form Panel */}
+            <form onSubmit={handleSubmit}>
           <AnimatePresence mode="wait">
 
             {/* STEP 1: Applicant Details */}
@@ -696,6 +886,8 @@ const ClanTripForm = () => {
             )}
           </div>
         </form>
+        </>
+      )}
 
       </div>
     </div>

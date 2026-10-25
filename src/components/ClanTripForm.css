@@ -97,25 +97,156 @@
   flex-wrap: wrap;
 }
 
-.passport-subtitle {
-  color: #8b949e;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0 0 14px 0;
+/* Top Portal Mode Tabs */
+.portal-tabs-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-.visa-rules-ticker {
-  background: rgba(248, 81, 73, 0.08);
-  border-left: 3px solid #f85149;
-  border-radius: 4px;
-  padding: 10px 14px;
-  font-size: 0.86rem;
-  color: #ff7b72;
+.portal-tab-btn {
+  flex: 1;
+  padding: 14px 20px;
+  background: rgba(22, 27, 34, 0.7);
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  color: #8b949e;
+  font-weight: 700;
+  font-size: 0.96rem;
+  cursor: pointer;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
-  line-height: 1.5;
+  transition: all 0.25s;
 }
+
+.portal-tab-btn:hover {
+  background: rgba(33, 38, 45, 0.9);
+  color: #ffffff;
+  border-color: #58a6ff;
+}
+
+.portal-tab-btn.active {
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.15), rgba(137, 87, 229, 0.15));
+  border-color: #58a6ff;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(88, 166, 255, 0.25);
+}
+
+/* Status Search Card */
+.status-search-panel {
+  background: rgba(19, 25, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px);
+  margin-bottom: 24px;
+}
+
+.status-search-box {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.status-search-btn {
+  background: linear-gradient(90deg, #58a6ff, #8957e5);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.status-search-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Status Result Banner */
+.status-result-card {
+  margin-top: 28px;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid #30363d;
+  background: rgba(13, 17, 23, 0.9);
+  animation: fadeIn 0.3s ease;
+}
+
+.status-result-card.status-approved {
+  border-color: #238636;
+  background: linear-gradient(145deg, rgba(35, 134, 54, 0.12), rgba(13, 17, 23, 0.95));
+}
+
+.status-result-card.status-pending {
+  border-color: #d29922;
+  background: linear-gradient(145deg, rgba(210, 153, 34, 0.12), rgba(13, 17, 23, 0.95));
+}
+
+.status-result-card.status-rejected {
+  border-color: #da3633;
+  background: linear-gradient(145deg, rgba(218, 54, 51, 0.12), rgba(13, 17, 23, 0.95));
+}
+
+.status-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.badge-approved {
+  background: #238636;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(35, 134, 54, 0.4);
+}
+
+.badge-pending {
+  background: #bb8009;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(187, 128, 9, 0.4);
+}
+
+.badge-rejected {
+  background: #da3633;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(218, 54, 51, 0.4);
+}
+
+.applicant-manifest-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.applicant-manifest-table th,
+.applicant-manifest-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.applicant-manifest-table th {
+  color: #8b949e;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 
 /* Step Progression bar */
 .visa-progress-tracker {
