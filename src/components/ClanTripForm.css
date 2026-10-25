@@ -3,83 +3,134 @@
   background-color: var(--bg-color);
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 40px 16px;
   font-family: var(--font-family);
   color: var(--text-primary);
 }
 
 .clan-trip-form {
   width: 100%;
-  max-width: 640px;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+}
+
+.form-header {
+  border-top: 10px solid var(--accent-primary);
+  border-radius: 12px;
+  background-color: var(--surface-color);
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 32px 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.form-header h1 {
+  font-size: 1.85rem;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.form-header p {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.form-header .highlight-warning {
+  color: #f85149;
+  font-weight: 500;
+}
+
+.section-divider-card {
+  background: linear-gradient(90deg, rgba(88, 166, 255, 0.15), rgba(137, 87, 229, 0.15));
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 8px;
+  padding: 16px 22px;
+}
+
+.section-divider-card h2 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--text-primary);
 }
 
 .form-card {
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 24px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  transition: border-color 0.2s;
 }
 
-.form-header {
-  border-top: 10px solid var(--accent-primary);
-  border-radius: 8px;
-  background-color: var(--surface-color);
-  padding: 32px 24px;
-  margin-bottom: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.form-header h1 {
-  font-size: 2rem;
-  margin-bottom: 12px;
-  color: var(--text-primary);
-}
-
-.form-header p {
-  color: var(--text-secondary);
-  font-size: 1rem;
+.form-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .form-question {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
 }
 
-.form-input-text {
+.form-helper {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.form-input-text,
+.form-textarea {
   width: 100%;
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
   font-size: 1rem;
-  padding: 8px 0;
+  padding: 10px 0;
   font-family: inherit;
   transition: border-color 0.2s;
 }
 
-.form-input-text:focus {
+.form-textarea {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  resize: vertical;
+  min-height: 80px;
+  margin-top: 8px;
+}
+
+.form-input-text:focus,
+.form-textarea:focus {
   outline: none;
-  border-bottom: 2px solid var(--accent-primary);
+  border-color: var(--accent-primary);
 }
 
 .form-radio-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 6px;
 }
 
 .form-radio-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
   color: var(--text-secondary);
-  transition: color 0.2s;
+  font-size: 0.98rem;
+  transition: color 0.15s;
+  padding: 4px 0;
 }
 
 .form-radio-label:hover {
@@ -89,33 +140,61 @@
 .form-radio-label input[type="radio"],
 .form-radio-label input[type="checkbox"] {
   accent-color: var(--accent-primary);
-  width: 18px;
-  height: 18px;
+  width: 19px;
+  height: 19px;
   cursor: pointer;
+}
+
+.declaration-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid #f85149;
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
 }
 
 .form-submit-container {
   display: flex;
   justify-content: flex-start;
-  margin-top: 10px;
+  margin: 12px 0 32px 0;
 }
 
 .form-submit-btn {
   background: linear-gradient(90deg, #ffffff, #d4d4d4);
-  color: #000;
+  color: #000000;
   border: none;
-  padding: 10px 24px;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.05rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
 .form-submit-btn:hover {
-  filter: brightness(0.9);
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
 }
 
 .success-message {
-  border-top: 10px solid var(--accent-secondary);
+  border-top: 10px solid #3fb950 !important;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.success-badge {
+  display: inline-block;
+  background: rgba(248, 81, 73, 0.15);
+  color: #ff7b72;
+  border: 1px solid rgba(248, 81, 73, 0.4);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 16px 0;
 }
