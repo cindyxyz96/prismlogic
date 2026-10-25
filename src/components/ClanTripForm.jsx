@@ -83,12 +83,28 @@ const ClanTripForm = () => {
       const data = await res.json();
       
       if (data && data.applicants) {
-        const cleanQuery = searchQuery.trim().toLowerCase().replace(/[\s\-\+]/g, '');
+        const rawQuery = searchQuery.trim().toLowerCase();
+        // Clean phone digits (remove spaces, hyphens, plus)
+        const digitsOnlyQuery = rawQuery.replace(/\D/g, '');
+        // Strip leading 0 or 94 if phone number
+        const normQueryDigits = digitsOnlyQuery.replace(/^0+/, '').replace(/^94/, '');
+
         const match = data.applicants.find(a => {
-          const aPhone = a.contactNumber.toLowerCase();
-          const aName = a.fullName.toLowerCase();
-          const aNick = a.tripNickname.toLowerCase();
-          return aPhone.includes(cleanQuery) || aNick.includes(cleanQuery) || aName.includes(cleanQuery);
+          const aName = (a.fullName || '').toLowerCase();
+          const aNick = (a.tripNickname || '').toLowerCase();
+          const aPhoneDigits = String(a.contactNumber || '').replace(/\D/g, '').replace(/^0+/, '').replace(/^94/, '');
+
+          // Check nickname or full name match
+          const nameMatch = (rawQuery.length >= 2 && (aNick.includes(rawQuery) || aName.includes(rawQuery) || rawQuery.includes(aNick)));
+          
+          // Check phone match
+          const phoneMatch = normQueryDigits.length >= 7 && (
+            aPhoneDigits === normQueryDigits || 
+            aPhoneDigits.endsWith(normQueryDigits) || 
+            normQueryDigits.endsWith(aPhoneDigits)
+          );
+
+          return nameMatch || phoneMatch;
         });
 
         setSearchResult(match || { notFound: true });
