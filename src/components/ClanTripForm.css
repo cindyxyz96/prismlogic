@@ -1,200 +1,528 @@
-.clan-trip-container {
+.visa-app-wrapper {
   min-height: 100vh;
-  background-color: var(--bg-color);
-  display: flex;
-  justify-content: center;
-  padding: 40px 16px;
-  font-family: var(--font-family);
-  color: var(--text-primary);
+  background: radial-gradient(circle at 50% 10%, #161f30 0%, #0a0d14 100%);
+  color: #e6edf3;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  padding: 40px 16px 80px 16px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.clan-trip-form {
-  width: 100%;
-  max-width: 680px;
+/* Background watermark emblem */
+.visa-bg-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32vw;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.018);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: -10px;
+}
+
+.visa-passport-container {
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Official Header Passport Banner */
+.passport-banner {
+  background: linear-gradient(145deg, #131c2d, #0d131f);
+  border: 1px solid rgba(88, 166, 255, 0.25);
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.passport-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffc83b, #ff6b6b, #4facfe, #00f2fe);
+}
+
+.embassy-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+}
+
+.embassy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #58a6ff;
+  text-transform: uppercase;
+}
+
+.passport-seal-icon {
+  width: 22px;
+  height: 22px;
+  color: #ffc83b;
+}
+
+.serial-number {
+  font-family: "Courier New", monospace;
+  font-size: 0.8rem;
+  color: #8b949e;
+  letter-spacing: 1px;
+}
+
+.passport-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.passport-subtitle {
+  color: #8b949e;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 14px 0;
+}
+
+.visa-rules-ticker {
+  background: rgba(248, 81, 73, 0.08);
+  border-left: 3px solid #f85149;
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-size: 0.86rem;
+  color: #ff7b72;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+/* Step Progression bar */
+.visa-progress-tracker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(22, 27, 34, 0.8);
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.progress-step-item {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  position: relative;
+  cursor: pointer;
 }
 
-.form-header {
-  border-top: 10px solid var(--accent-primary);
-  border-radius: 12px;
-  background-color: var(--surface-color);
-  border-left: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-  padding: 32px 28px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+.progress-step-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 60%;
+  width: 80%;
+  height: 2px;
+  background: #30363d;
+  z-index: 0;
 }
 
-.form-header h1 {
-  font-size: 1.85rem;
-  margin-bottom: 14px;
-  color: var(--text-primary);
-  line-height: 1.3;
+.progress-step-item.completed:not(:last-child)::after {
+  background: #238636;
 }
 
-.form-header p {
-  color: var(--text-secondary);
+.step-indicator-bubble {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #21262d;
+  color: #8b949e;
+  border: 2px solid #30363d;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.progress-step-item.active .step-indicator-bubble {
+  background: #58a6ff;
+  color: #0a0d14;
+  border-color: #58a6ff;
+  box-shadow: 0 0 12px rgba(88, 166, 255, 0.6);
+}
+
+.progress-step-item.completed .step-indicator-bubble {
+  background: #238636;
+  color: #ffffff;
+  border-color: #238636;
+}
+
+.step-label {
+  font-size: 0.72rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.progress-step-item.active .step-label {
+  color: #58a6ff;
+}
+
+/* Visa Section Cards */
+.visa-section-panel {
+  background: rgba(19, 25, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 30px 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px);
+  margin-bottom: 24px;
+}
+
+.visa-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.panel-header-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(88, 166, 255, 0.12);
+  color: #58a6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visa-panel-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Question Group */
+.visa-field-group {
+  margin-bottom: 26px;
+}
+
+.visa-field-label {
+  display: block;
   font-size: 0.98rem;
-  line-height: 1.6;
-  margin-bottom: 12px;
+  font-weight: 600;
+  color: #f0f6fc;
+  margin-bottom: 6px;
 }
 
-.form-header .highlight-warning {
-  color: #f85149;
+.visa-field-hint {
+  font-size: 0.84rem;
+  color: #8b949e;
+  margin-bottom: 10px;
+}
+
+/* Modern Inputs */
+.visa-text-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(13, 17, 23, 0.8);
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #ffffff;
+  font-size: 0.96rem;
+  outline: none;
+  transition: all 0.25s;
+}
+
+.visa-text-input:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+  background: rgba(13, 17, 23, 1);
+}
+
+.visa-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Interactive Visa Pill Grid (Modern Radio/Selection) */
+.visa-option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.visa-option-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(22, 27, 34, 0.6);
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.visa-option-card:hover {
+  background: rgba(33, 38, 45, 0.9);
+  border-color: #58a6ff;
+  transform: translateY(-2px);
+}
+
+.visa-option-card.selected {
+  background: rgba(88, 166, 255, 0.12);
+  border-color: #58a6ff;
+  box-shadow: 0 0 14px rgba(88, 166, 255, 0.25);
+}
+
+.visa-option-indicator {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #8b949e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.visa-option-card.selected .visa-option-indicator {
+  border-color: #58a6ff;
+  background: #58a6ff;
+}
+
+.indicator-dot {
+  width: 6px;
+  height: 6px;
+  background: #0d1117;
+  border-radius: 50%;
+}
+
+.visa-option-text {
+  font-size: 0.92rem;
+  color: #c9d1d9;
   font-weight: 500;
 }
 
-.section-divider-card {
-  background: linear-gradient(90deg, rgba(88, 166, 255, 0.15), rgba(137, 87, 229, 0.15));
-  border: 1px solid var(--border-color);
-  border-left: 4px solid var(--accent-primary);
-  border-radius: 8px;
-  padding: 16px 22px;
-}
-
-.section-divider-card h2 {
-  font-size: 1.25rem;
-  margin: 0;
-  color: var(--text-primary);
-}
-
-.form-card {
-  background-color: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-  transition: border-color 0.2s;
-}
-
-.form-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.form-question {
-  font-size: 1.05rem;
+.visa-option-card.selected .visa-option-text {
+  color: #ffffff;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text-primary);
 }
 
-.form-helper {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
-  font-style: italic;
+/* Official Declaration Document Box */
+.official-declaration-doc {
+  background: linear-gradient(135deg, rgba(248, 81, 73, 0.05), rgba(137, 87, 229, 0.05));
+  border: 1px solid rgba(248, 81, 73, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-.form-input-text,
-.form-textarea {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-primary);
-  font-size: 1rem;
-  padding: 10px 0;
-  font-family: inherit;
-  transition: border-color 0.2s;
+.doc-stamp {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: 2px dashed #f85149;
+  color: #ff7b72;
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 4px 8px;
+  text-transform: uppercase;
+  transform: rotate(10deg);
+  border-radius: 4px;
 }
 
-.form-textarea {
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  padding: 12px;
-  resize: vertical;
-  min-height: 80px;
-  margin-top: 8px;
+.declaration-text {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #c9d1d9;
+  margin: 0;
 }
 
-.form-input-text:focus,
-.form-textarea:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-}
-
-.form-radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 6px;
-}
-
-.form-radio-label {
+.checkbox-confirm-row {
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 0.98rem;
-  transition: color 0.15s;
-  padding: 4px 0;
+  padding: 12px 14px;
+  background: rgba(22, 27, 34, 0.7);
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  transition: border-color 0.2s;
 }
 
-.form-radio-label:hover {
-  color: var(--text-primary);
+.checkbox-confirm-row:hover {
+  border-color: #58a6ff;
 }
 
-.form-radio-label input[type="radio"],
-.form-radio-label input[type="checkbox"] {
-  accent-color: var(--accent-primary);
-  width: 19px;
-  height: 19px;
+.checkbox-confirm-row input {
+  width: 20px;
+  height: 20px;
+  accent-color: #238636;
   cursor: pointer;
 }
 
-.declaration-box {
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 3px solid #f85149;
-  padding: 16px;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
-}
-
-.form-submit-container {
+/* Footer Control Buttons */
+.form-navigation-actions {
   display: flex;
-  justify-content: flex-start;
-  margin: 12px 0 32px 0;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
 }
 
-.form-submit-btn {
-  background: linear-gradient(90deg, #ffffff, #d4d4d4);
-  color: #000000;
+.nav-prev-btn {
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.nav-prev-btn:hover {
+  background: #30363d;
+  color: #ffffff;
+}
+
+.nav-next-btn,
+.nav-submit-btn {
+  background: linear-gradient(90deg, #58a6ff, #8957e5);
   border: none;
-  padding: 14px 32px;
+  color: #ffffff;
+  padding: 14px 30px;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   cursor: pointer;
-  transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 18px rgba(88, 166, 255, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-left: auto;
 }
 
-.form-submit-btn:hover {
+.nav-next-btn:hover,
+.nav-submit-btn:hover {
   transform: translateY(-2px);
-  filter: brightness(1.05);
-  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(88, 166, 255, 0.5);
+  filter: brightness(1.1);
 }
 
-.success-message {
-  border-top: 10px solid #3fb950 !important;
-  text-align: center;
-  padding: 48px 24px;
-}
-
-.success-badge {
-  display: inline-block;
-  background: rgba(248, 81, 73, 0.15);
-  color: #ff7b72;
-  border: 1px solid rgba(248, 81, 73, 0.4);
-  padding: 6px 16px;
+/* Passport Stamp Approved / Under Investigation Screen */
+.passport-approved-card {
+  background: linear-gradient(145deg, #131c2d, #0b111a);
+  border: 2px solid rgba(88, 166, 255, 0.3);
   border-radius: 20px;
+  padding: 44px 28px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+.investigation-stamp-graphic {
+  display: inline-block;
+  border: 4px solid #f85149;
+  color: #ff7b72;
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: 1.55rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  transform: rotate(-6deg);
+  box-shadow: 0 0 24px rgba(248, 81, 73, 0.35);
+  margin: 20px 0;
+  animation: stampImpact 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes stampImpact {
+  0% { transform: scale(3) rotate(-20deg); opacity: 0; }
+  100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+}
+
+.passport-details-ticket {
+  background: rgba(13, 17, 23, 0.8);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  text-align: left;
+}
+
+.ticket-item-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #8b949e;
+  letter-spacing: 1px;
+}
+
+.ticket-item-val {
+  font-size: 0.95rem;
+  color: #58a6ff;
   font-weight: 600;
-  font-size: 0.9rem;
-  margin: 16px 0;
+  margin-top: 2px;
+}
+
+@media (max-width: 600px) {
+  .passport-title {
+    font-size: 1.45rem;
+  }
+  .visa-option-grid {
+    grid-template-columns: 1fr;
+  }
+  .passport-details-ticket {
+    grid-template-columns: 1fr;
+  }
+  .step-label {
+    display: none;
+  }
 }
