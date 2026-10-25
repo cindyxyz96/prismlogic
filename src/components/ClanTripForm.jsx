@@ -437,8 +437,26 @@ const ClanTripForm = () => {
                   </div>
                 </div>
 
+                {/* Official Trip Budget Card */}
+                <div className="budget-notice-card">
+                  <div className="budget-badge-row">
+                    <div>
+                      <div style={{ fontSize: '0.78rem', color: '#8b949e', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        Estimated Trip Budget
+                      </div>
+                      <div className="budget-amount-tag">LKR 12,000/=</div>
+                    </div>
+                    <div className="budget-contingency-tag">
+                      ⚠️ + LKR 1,000 – 2,000 (In case of budget overrun)
+                    </div>
+                  </div>
+                  <p className="budget-notice-desc">
+                    💡 <strong>Notice from Treasury:</strong> The base trip contribution is estimated at <strong>12,000/=</strong>. In case of emergency or unexpected trip expenses, an additional <strong>1,000 – 2,000</strong> may be collected (only if the budget goes over).
+                  </p>
+                </div>
+
                 <div className="visa-field-group">
-                  <label className="visa-field-label">8. Are you financially prepared for the consequences of saying “YES”? *</label>
+                  <label className="visa-field-label">8. Are you financially prepared for the consequences of saying “YES” (LKR 12,000/= + emergency buffer)? *</label>
                   <div className="visa-option-grid">
                     {[
                       "💰 Yes, I’m rich",
